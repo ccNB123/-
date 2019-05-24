@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer.chengcong.dao.ConsumeordersMapper">
+  <resultMap id="BaseResultMap" type="customer.chengcong.entity.Consumeorders">
+    <id column="CONSUMEORDERS_ID" jdbcType="INTEGER" property="consumeordersId" />
+    <result column="SHOP_ID" jdbcType="INTEGER" property="shopId" />
+    <result column="USERS_ID" jdbcType="INTEGER" property="usersId" />
+    <result column="CONSUMEORDERS_ORDERCODE" jdbcType="VARCHAR" property="consumeordersOrdercode" />
+    <result column="CONSUMEORDERS_ORDERTYPE" jdbcType="INTEGER" property="consumeordersOrdertype" />
+    <result column="MEMCARDS_ID" jdbcType="INTEGER" property="memcardsId" />
+    <result column="MEMCARDS_CARDID" jdbcType="VARCHAR" property="memcardsCardid" />
+    <result column="EXCHANGGIFTS_ID" jdbcType="INTEGER" property="exchanggiftsId" />
+    <result column="CONSUMEORDERS_TOTALMONEY" jdbcType="REAL" property="consumeordersTotalmoney" />
+    <result column="CONSUMEORDERS_DISCOUNTMONEY" jdbcType="REAL" property="consumeordersDiscountmoney" />
+    <result column="CONSUMEORDERS_GAVEPOINT" jdbcType="INTEGER" property="consumeordersGavepoint" />
+    <result column="CONSUMEORDERS_RECASH" jdbcType="REAL" property="consumeordersRecash" />
+    <result column="CONSUMEORDERS_REMARK" jdbcType="VARCHAR" property="consumeordersRemark" />
+    <result column="CONSUMEORDERS_CREATETIME" jdbcType="TIMESTAMP" property="consumeordersCreatetime" />
+    <result column="CONSUMEORDERS_ISDEL" jdbcType="INTEGER" property="consumeordersIsdel" />
+    <association property="categories" column="CONSUMEORDERS_ORDERTYPE" select="customer.chengcong.dao.CategoriesMapper.selectByPrimaryKey"></association>
+    <association property="memcards" column="MEMCARDS_ID" select="customer.chengcong.dao.MemcardsMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CONSUMEORDERS_ID, SHOP_ID, USERS_ID, CONSUMEORDERS_ORDERCODE, CONSUMEORDERS_ORDERTYPE, 
+    MEMCARDS_ID, MEMCARDS_CARDID, EXCHANGGIFTS_ID, CONSUMEORDERS_TOTALMONEY, CONSUMEORDERS_DISCOUNTMONEY, 
+    CONSUMEORDERS_GAVEPOINT, CONSUMEORDERS_RECASH, CONSUMEORDERS_REMARK, CONSUMEORDERS_CREATETIME, 
+    CONSUMEORDERS_ISDEL
+  </sql>
+  <select id="selectByExample" parameterType="customer.chengcong.entity.ConsumeordersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from consumeorders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from consumeorders
+    where CONSUMEORDERS_ID = #{consumeordersId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from consumeorders
+    where CONSUMEORDERS_ID = #{consumeordersId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="customer.chengcong.entity.ConsumeordersExample">
+    delete from consumeorders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="customer.chengcong.entity.Consumeorders">
+    insert into consumeorders (CONSUMEORDERS_ID, SHOP_ID, USERS_ID, 
+      CONSUMEORDERS_ORDERCODE, CONSUMEORDERS_ORDERTYPE, 
+      MEMCARDS_ID, MEMCARDS_CARDID, EXCHANGGIFTS_ID, 
+      CONSUMEORDERS_TOTALMONEY, CONSUMEORDERS_DISCOUNTMONEY, 
+      CONSUMEORDERS_GAVEPOINT, CONSUMEORDERS_RECASH, 
+      CONSUMEORDERS_REMARK, CONSUMEORDERS_CREATETIME, 
+      CONSUMEORDERS_ISDEL)
+    values (#{consumeordersId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{usersId,jdbcType=INTEGER}, 
+      #{consumeordersOrdercode,jdbcType=VARCHAR}, #{consumeordersOrdertype,jdbcType=INTEGER}, 
+      #{memcardsId,jdbcType=INTEGER}, #{memcardsCardid,jdbcType=VARCHAR}, #{exchanggiftsId,jdbcType=INTEGER}, 
+      #{consumeordersTotalmoney,jdbcType=REAL}, #{consumeordersDiscountmoney,jdbcType=REAL}, 
+      #{consumeordersGavepoint,jdbcType=INTEGER}, #{consumeordersRecash,jdbcType=REAL}, 
+      #{consumeordersRemark,jdbcType=VARCHAR}, #{consumeordersCreatetime,jdbcType=TIMESTAMP}, 
+      #{consumeordersIsdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="customer.chengcong.entity.Consumeorders">
+    insert into consumeorders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="consumeordersId != null">
+        CONSUMEORDERS_ID,
+      </if>
+      <if test="shopId != null">
+        SHOP_ID,
+      </if>
+      <if test="usersId != null">
+        USERS_ID,
+      </if>
+      <if test="consumeordersOrdercode != null">
+        CONSUMEORDERS_ORDERCODE,
+      </if>
+      <if test="consumeordersOrdertype != null">
+        CONSUMEORDERS_ORDERTYPE,
+      </if>
+      <if test="memcardsId != null">
+        MEMCARDS_ID,
+      </if>
+      <if test="memcardsCardid != null">
+        MEMCARDS_CARDID,
+      </if>
+      <if test="exchanggiftsId != null">
+        EXCHANGGIFTS_ID,
+      </if>
+      <if test="consumeordersTotalmoney != null">
+        CONSUMEORDERS_TOTALMONEY,
+      </if>
+      <if test="consumeordersDiscountmoney != null">
+        CONSUMEORDERS_DISCOUNTMONEY,
+      </if>
+      <if test="consumeordersGavepoint != null">
+        CONSUMEORDERS_GAVEPOINT,
+      </if>
+      <if test="consumeordersRecash != null">
+        CONSUMEORDERS_RECASH,
+      </if>
+      <if test="consumeordersRemark != null">
+        CONSUMEORDERS_REMARK,
+      </if>
+      <if test="consumeordersCreatetime != null">
+        CONSUMEORDERS_CREATETIME,
+      </if>
+      <if test="consumeordersIsdel != null">
+        CONSUMEORDERS_ISDEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="consumeordersId != null">
+        #{consumeordersId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null">
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="consumeordersOrdercode != null">
+        #{consumeordersOrdercode,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeordersOrdertype != null">
+        #{consumeordersOrdertype,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsId != null">
+        #{memcardsId,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsCardid != null">
+        #{memcardsCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsId != null">
+        #{exchanggiftsId,jdbcType=INTEGER},
+      </if>
+      <if test="consumeordersTotalmoney != null">
+        #{consumeordersTotalmoney,jdbcType=REAL},
+      </if>
+      <if test="consumeordersDiscountmoney != null">
+        #{consumeordersDiscountmoney,jdbcType=REAL},
+      </if>
+      <if test="consumeordersGavepoint != null">
+        #{consumeordersGavepoint,jdbcType=INTEGER},
+      </if>
+      <if test="consumeordersRecash != null">
+        #{consumeordersRecash,jdbcType=REAL},
+      </if>
+      <if test="consumeordersRemark != null">
+        #{consumeordersRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeordersCreatetime != null">
+        #{consumeordersCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeordersIsdel != null">
+        #{consumeordersIsdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="customer.chengcong.entity.ConsumeordersExample" resultType="java.lang.Integer">
+    select count(*) from consumeorders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update consumeorders
+    <set>
+      <if test="record.consumeordersId != null">
+        CONSUMEORDERS_ID = #{record.consumeordersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersId != null">
+        USERS_ID = #{record.usersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumeordersOrdercode != null">
+        CONSUMEORDERS_ORDERCODE = #{record.consumeordersOrdercode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumeordersOrdertype != null">
+        CONSUMEORDERS_ORDERTYPE = #{record.consumeordersOrdertype,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsId != null">
+        MEMCARDS_ID = #{record.memcardsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsCardid != null">
+        MEMCARDS_CARDID = #{record.memcardsCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchanggiftsId != null">
+        EXCHANGGIFTS_ID = #{record.exchanggiftsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumeordersTotalmoney != null">
+        CONSUMEORDERS_TOTALMONEY = #{record.consumeordersTotalmoney,jdbcType=REAL},
+      </if>
+      <if test="record.consumeordersDiscountmoney != null">
+        CONSUMEORDERS_DISCOUNTMONEY = #{record.consumeordersDiscountmoney,jdbcType=REAL},
+      </if>
+      <if test="record.consumeordersGavepoint != null">
+        CONSUMEORDERS_GAVEPOINT = #{record.consumeordersGavepoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumeordersRecash != null">
+        CONSUMEORDERS_RECASH = #{record.consumeordersRecash,jdbcType=REAL},
+      </if>
+      <if test="record.consumeordersRemark != null">
+        CONSUMEORDERS_REMARK = #{record.consumeordersRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumeordersCreatetime != null">
+        CONSUMEORDERS_CREATETIME = #{record.consumeordersCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.consumeordersIsdel != null">
+        CONSUMEORDERS_ISDEL = #{record.consumeordersIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update consumeorders
+    set CONSUMEORDERS_ID = #{record.consumeordersId,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      USERS_ID = #{record.usersId,jdbcType=INTEGER},
+      CONSUMEORDERS_ORDERCODE = #{record.consumeordersOrdercode,jdbcType=VARCHAR},
+      CONSUMEORDERS_ORDERTYPE = #{record.consumeordersOrdertype,jdbcType=INTEGER},
+      MEMCARDS_ID = #{record.memcardsId,jdbcType=INTEGER},
+      MEMCARDS_CARDID = #{record.memcardsCardid,jdbcType=VARCHAR},
+      EXCHANGGIFTS_ID = #{record.exchanggiftsId,jdbcType=INTEGER},
+      CONSUMEORDERS_TOTALMONEY = #{record.consumeordersTotalmoney,jdbcType=REAL},
+      CONSUMEORDERS_DISCOUNTMONEY = #{record.consumeordersDiscountmoney,jdbcType=REAL},
+      CONSUMEORDERS_GAVEPOINT = #{record.consumeordersGavepoint,jdbcType=INTEGER},
+      CONSUMEORDERS_RECASH = #{record.consumeordersRecash,jdbcType=REAL},
+      CONSUMEORDERS_REMARK = #{record.consumeordersRemark,jdbcType=VARCHAR},
+      CONSUMEORDERS_CREATETIME = #{record.consumeordersCreatetime,jdbcType=TIMESTAMP},
+      CONSUMEORDERS_ISDEL = #{record.consumeordersIsdel,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="customer.chengcong.entity.Consumeorders">
+    update consumeorders
+    <set>
+      <if test="shopId != null">
+        SHOP_ID = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null">
+        USERS_ID = #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="consumeordersOrdercode != null">
+        CONSUMEORDERS_ORDERCODE = #{consumeordersOrdercode,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeordersOrdertype != null">
+        CONSUMEORDERS_ORDERTYPE = #{consumeordersOrdertype,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsId != null">
+        MEMCARDS_ID = #{memcardsId,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsCardid != null">
+        MEMCARDS_CARDID = #{memcardsCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsId != null">
+        EXCHANGGIFTS_ID = #{exchanggiftsId,jdbcType=INTEGER},
+      </if>
+      <if test="consumeordersTotalmoney != null">
+        CONSUMEORDERS_TOTALMONEY = #{consumeordersTotalmoney,jdbcType=REAL},
+      </if>
+      <if test="consumeordersDiscountmoney != null">
+        CONSUMEORDERS_DISCOUNTMONEY = #{consumeordersDiscountmoney,jdbcType=REAL},
+      </if>
+      <if test="consumeordersGavepoint != null">
+        CONSUMEORDERS_GAVEPOINT = #{consumeordersGavepoint,jdbcType=INTEGER},
+      </if>
+      <if test="consumeordersRecash != null">
+        CONSUMEORDERS_RECASH = #{consumeordersRecash,jdbcType=REAL},
+      </if>
+      <if test="consumeordersRemark != null">
+        CONSUMEORDERS_REMARK = #{consumeordersRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeordersCreatetime != null">
+        CONSUMEORDERS_CREATETIME = #{consumeordersCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeordersIsdel != null">
+        CONSUMEORDERS_ISDEL = #{consumeordersIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CONSUMEORDERS_ID = #{consumeordersId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="customer.chengcong.entity.Consumeorders">
+    update consumeorders
+    set SHOP_ID = #{shopId,jdbcType=INTEGER},
+      USERS_ID = #{usersId,jdbcType=INTEGER},
+      CONSUMEORDERS_ORDERCODE = #{consumeordersOrdercode,jdbcType=VARCHAR},
+      CONSUMEORDERS_ORDERTYPE = #{consumeordersOrdertype,jdbcType=INTEGER},
+      MEMCARDS_ID = #{memcardsId,jdbcType=INTEGER},
+      MEMCARDS_CARDID = #{memcardsCardid,jdbcType=VARCHAR},
+      EXCHANGGIFTS_ID = #{exchanggiftsId,jdbcType=INTEGER},
+      CONSUMEORDERS_TOTALMONEY = #{consumeordersTotalmoney,jdbcType=REAL},
+      CONSUMEORDERS_DISCOUNTMONEY = #{consumeordersDiscountmoney,jdbcType=REAL},
+      CONSUMEORDERS_GAVEPOINT = #{consumeordersGavepoint,jdbcType=INTEGER},
+      CONSUMEORDERS_RECASH = #{consumeordersRecash,jdbcType=REAL},
+      CONSUMEORDERS_REMARK = #{consumeordersRemark,jdbcType=VARCHAR},
+      CONSUMEORDERS_CREATETIME = #{consumeordersCreatetime,jdbcType=TIMESTAMP},
+      CONSUMEORDERS_ISDEL = #{consumeordersIsdel,jdbcType=INTEGER}
+    where CONSUMEORDERS_ID = #{consumeordersId,jdbcType=INTEGER}
+  </update>
+</mapper>

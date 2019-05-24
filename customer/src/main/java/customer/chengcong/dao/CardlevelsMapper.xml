@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer.chengcong.dao.CardlevelsMapper">
+  <resultMap id="BaseResultMap" type="customer.chengcong.entity.Cardlevels">
+    <id column="CARDLEVELS_ID" jdbcType="INTEGER" property="cardlevelsId" />
+    <result column="CARDLEVELS_LEVELNAME" jdbcType="VARCHAR" property="cardlevelsLevelname" />
+    <result column="CARDLEVELS_NEEDPOINT" jdbcType="INTEGER" property="cardlevelsNeedpoint" />
+    <result column="CARDLEVELS_POINT" jdbcType="REAL" property="cardlevelsPoint" />
+    <result column="CARDLEVELS_PERCENT" jdbcType="REAL" property="cardlevelsPercent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CARDLEVELS_ID, CARDLEVELS_LEVELNAME, CARDLEVELS_NEEDPOINT, CARDLEVELS_POINT, CARDLEVELS_PERCENT
+  </sql>
+  <select id="selectByExample" parameterType="customer.chengcong.entity.CardlevelsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cardlevels
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cardlevels
+    where CARDLEVELS_ID = #{cardlevelsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cardlevels
+    where CARDLEVELS_ID = #{cardlevelsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="customer.chengcong.entity.CardlevelsExample">
+    delete from cardlevels
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="customer.chengcong.entity.Cardlevels">
+    insert into cardlevels (CARDLEVELS_ID, CARDLEVELS_LEVELNAME, 
+      CARDLEVELS_NEEDPOINT, CARDLEVELS_POINT, CARDLEVELS_PERCENT
+      )
+    values (#{cardlevelsId,jdbcType=INTEGER}, #{cardlevelsLevelname,jdbcType=VARCHAR}, 
+      #{cardlevelsNeedpoint,jdbcType=INTEGER}, #{cardlevelsPoint,jdbcType=REAL}, #{cardlevelsPercent,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="customer.chengcong.entity.Cardlevels">
+    insert into cardlevels
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cardlevelsId != null">
+        CARDLEVELS_ID,
+      </if>
+      <if test="cardlevelsLevelname != null">
+        CARDLEVELS_LEVELNAME,
+      </if>
+      <if test="cardlevelsNeedpoint != null">
+        CARDLEVELS_NEEDPOINT,
+      </if>
+      <if test="cardlevelsPoint != null">
+        CARDLEVELS_POINT,
+      </if>
+      <if test="cardlevelsPercent != null">
+        CARDLEVELS_PERCENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cardlevelsId != null">
+        #{cardlevelsId,jdbcType=INTEGER},
+      </if>
+      <if test="cardlevelsLevelname != null">
+        #{cardlevelsLevelname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardlevelsNeedpoint != null">
+        #{cardlevelsNeedpoint,jdbcType=INTEGER},
+      </if>
+      <if test="cardlevelsPoint != null">
+        #{cardlevelsPoint,jdbcType=REAL},
+      </if>
+      <if test="cardlevelsPercent != null">
+        #{cardlevelsPercent,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="customer.chengcong.entity.CardlevelsExample" resultType="java.lang.Integer">
+    select count(*) from cardlevels
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cardlevels
+    <set>
+      <if test="record.cardlevelsId != null">
+        CARDLEVELS_ID = #{record.cardlevelsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardlevelsLevelname != null">
+        CARDLEVELS_LEVELNAME = #{record.cardlevelsLevelname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardlevelsNeedpoint != null">
+        CARDLEVELS_NEEDPOINT = #{record.cardlevelsNeedpoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardlevelsPoint != null">
+        CARDLEVELS_POINT = #{record.cardlevelsPoint,jdbcType=REAL},
+      </if>
+      <if test="record.cardlevelsPercent != null">
+        CARDLEVELS_PERCENT = #{record.cardlevelsPercent,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cardlevels
+    set CARDLEVELS_ID = #{record.cardlevelsId,jdbcType=INTEGER},
+      CARDLEVELS_LEVELNAME = #{record.cardlevelsLevelname,jdbcType=VARCHAR},
+      CARDLEVELS_NEEDPOINT = #{record.cardlevelsNeedpoint,jdbcType=INTEGER},
+      CARDLEVELS_POINT = #{record.cardlevelsPoint,jdbcType=REAL},
+      CARDLEVELS_PERCENT = #{record.cardlevelsPercent,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="customer.chengcong.entity.Cardlevels">
+    update cardlevels
+    <set>
+      <if test="cardlevelsLevelname != null">
+        CARDLEVELS_LEVELNAME = #{cardlevelsLevelname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardlevelsNeedpoint != null">
+        CARDLEVELS_NEEDPOINT = #{cardlevelsNeedpoint,jdbcType=INTEGER},
+      </if>
+      <if test="cardlevelsPoint != null">
+        CARDLEVELS_POINT = #{cardlevelsPoint,jdbcType=REAL},
+      </if>
+      <if test="cardlevelsPercent != null">
+        CARDLEVELS_PERCENT = #{cardlevelsPercent,jdbcType=REAL},
+      </if>
+    </set>
+    where CARDLEVELS_ID = #{cardlevelsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="customer.chengcong.entity.Cardlevels">
+    update cardlevels
+    set CARDLEVELS_LEVELNAME = #{cardlevelsLevelname,jdbcType=VARCHAR},
+      CARDLEVELS_NEEDPOINT = #{cardlevelsNeedpoint,jdbcType=INTEGER},
+      CARDLEVELS_POINT = #{cardlevelsPoint,jdbcType=REAL},
+      CARDLEVELS_PERCENT = #{cardlevelsPercent,jdbcType=REAL}
+    where CARDLEVELS_ID = #{cardlevelsId,jdbcType=INTEGER}
+  </update>
+</mapper>

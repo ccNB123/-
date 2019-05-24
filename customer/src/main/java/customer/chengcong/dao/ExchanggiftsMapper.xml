@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer.chengcong.dao.ExchanggiftsMapper">
+  <resultMap id="BaseResultMap" type="customer.chengcong.entity.Exchanggifts">
+    <id column="EXCHANGGIFTS_ID" jdbcType="INTEGER" property="exchanggiftsId" />
+    <result column="SHOP_ID" jdbcType="INTEGER" property="shopId" />
+    <result column="EXCHANGGIFTS_GIFTCODE" jdbcType="VARCHAR" property="exchanggiftsGiftcode" />
+    <result column="EXCHANGGIFTS_GIFTNAME" jdbcType="VARCHAR" property="exchanggiftsGiftname" />
+    <result column="EXCHANGGIFTS_PHOTO" jdbcType="VARCHAR" property="exchanggiftsPhoto" />
+    <result column="EXCHANGGIFTS_POINT" jdbcType="INTEGER" property="exchanggiftsPoint" />
+    <result column="EXCHANGGIFTS_INTEGER" jdbcType="INTEGER" property="exchanggiftsInteger" />
+    <result column="EXCHANGGIFTS_EXCHANGNUM" jdbcType="INTEGER" property="exchanggiftsExchangnum" />
+    <result column="EXCHANGGIFTS_REMARK" jdbcType="VARCHAR" property="exchanggiftsRemark" />
+    <result column="EXCHANGGIFTS_STATE" jdbcType="INTEGER" property="exchanggiftsState" />
+    <result column="EXCHANGGIFTS_ISDEL" jdbcType="INTEGER" property="exchanggiftsIsdel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EXCHANGGIFTS_ID, SHOP_ID, EXCHANGGIFTS_GIFTCODE, EXCHANGGIFTS_GIFTNAME, EXCHANGGIFTS_PHOTO, 
+    EXCHANGGIFTS_POINT, EXCHANGGIFTS_INTEGER, EXCHANGGIFTS_EXCHANGNUM, EXCHANGGIFTS_REMARK, 
+    EXCHANGGIFTS_STATE, EXCHANGGIFTS_ISDEL
+  </sql>
+  <select id="selectByExample" parameterType="customer.chengcong.entity.ExchanggiftsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exchanggifts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exchanggifts
+    where EXCHANGGIFTS_ID = #{exchanggiftsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from exchanggifts
+    where EXCHANGGIFTS_ID = #{exchanggiftsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="customer.chengcong.entity.ExchanggiftsExample">
+    delete from exchanggifts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="customer.chengcong.entity.Exchanggifts">
+    insert into exchanggifts (EXCHANGGIFTS_ID, SHOP_ID, EXCHANGGIFTS_GIFTCODE, 
+      EXCHANGGIFTS_GIFTNAME, EXCHANGGIFTS_PHOTO, 
+      EXCHANGGIFTS_POINT, EXCHANGGIFTS_INTEGER, 
+      EXCHANGGIFTS_EXCHANGNUM, EXCHANGGIFTS_REMARK, 
+      EXCHANGGIFTS_STATE, EXCHANGGIFTS_ISDEL)
+    values (#{exchanggiftsId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{exchanggiftsGiftcode,jdbcType=VARCHAR}, 
+      #{exchanggiftsGiftname,jdbcType=VARCHAR}, #{exchanggiftsPhoto,jdbcType=VARCHAR}, 
+      #{exchanggiftsPoint,jdbcType=INTEGER}, #{exchanggiftsInteger,jdbcType=INTEGER}, 
+      #{exchanggiftsExchangnum,jdbcType=INTEGER}, #{exchanggiftsRemark,jdbcType=VARCHAR}, 
+      #{exchanggiftsState,jdbcType=INTEGER}, #{exchanggiftsIsdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="customer.chengcong.entity.Exchanggifts">
+    insert into exchanggifts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="exchanggiftsId != null">
+        EXCHANGGIFTS_ID,
+      </if>
+      <if test="shopId != null">
+        SHOP_ID,
+      </if>
+      <if test="exchanggiftsGiftcode != null">
+        EXCHANGGIFTS_GIFTCODE,
+      </if>
+      <if test="exchanggiftsGiftname != null">
+        EXCHANGGIFTS_GIFTNAME,
+      </if>
+      <if test="exchanggiftsPhoto != null">
+        EXCHANGGIFTS_PHOTO,
+      </if>
+      <if test="exchanggiftsPoint != null">
+        EXCHANGGIFTS_POINT,
+      </if>
+      <if test="exchanggiftsInteger != null">
+        EXCHANGGIFTS_INTEGER,
+      </if>
+      <if test="exchanggiftsExchangnum != null">
+        EXCHANGGIFTS_EXCHANGNUM,
+      </if>
+      <if test="exchanggiftsRemark != null">
+        EXCHANGGIFTS_REMARK,
+      </if>
+      <if test="exchanggiftsState != null">
+        EXCHANGGIFTS_STATE,
+      </if>
+      <if test="exchanggiftsIsdel != null">
+        EXCHANGGIFTS_ISDEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="exchanggiftsId != null">
+        #{exchanggiftsId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsGiftcode != null">
+        #{exchanggiftsGiftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsGiftname != null">
+        #{exchanggiftsGiftname,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsPhoto != null">
+        #{exchanggiftsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsPoint != null">
+        #{exchanggiftsPoint,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsInteger != null">
+        #{exchanggiftsInteger,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsExchangnum != null">
+        #{exchanggiftsExchangnum,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsRemark != null">
+        #{exchanggiftsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsState != null">
+        #{exchanggiftsState,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsIsdel != null">
+        #{exchanggiftsIsdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="customer.chengcong.entity.ExchanggiftsExample" resultType="java.lang.Integer">
+    select count(*) from exchanggifts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update exchanggifts
+    <set>
+      <if test="record.exchanggiftsId != null">
+        EXCHANGGIFTS_ID = #{record.exchanggiftsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchanggiftsGiftcode != null">
+        EXCHANGGIFTS_GIFTCODE = #{record.exchanggiftsGiftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchanggiftsGiftname != null">
+        EXCHANGGIFTS_GIFTNAME = #{record.exchanggiftsGiftname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchanggiftsPhoto != null">
+        EXCHANGGIFTS_PHOTO = #{record.exchanggiftsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchanggiftsPoint != null">
+        EXCHANGGIFTS_POINT = #{record.exchanggiftsPoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchanggiftsInteger != null">
+        EXCHANGGIFTS_INTEGER = #{record.exchanggiftsInteger,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchanggiftsExchangnum != null">
+        EXCHANGGIFTS_EXCHANGNUM = #{record.exchanggiftsExchangnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchanggiftsRemark != null">
+        EXCHANGGIFTS_REMARK = #{record.exchanggiftsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchanggiftsState != null">
+        EXCHANGGIFTS_STATE = #{record.exchanggiftsState,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchanggiftsIsdel != null">
+        EXCHANGGIFTS_ISDEL = #{record.exchanggiftsIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update exchanggifts
+    set EXCHANGGIFTS_ID = #{record.exchanggiftsId,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      EXCHANGGIFTS_GIFTCODE = #{record.exchanggiftsGiftcode,jdbcType=VARCHAR},
+      EXCHANGGIFTS_GIFTNAME = #{record.exchanggiftsGiftname,jdbcType=VARCHAR},
+      EXCHANGGIFTS_PHOTO = #{record.exchanggiftsPhoto,jdbcType=VARCHAR},
+      EXCHANGGIFTS_POINT = #{record.exchanggiftsPoint,jdbcType=INTEGER},
+      EXCHANGGIFTS_INTEGER = #{record.exchanggiftsInteger,jdbcType=INTEGER},
+      EXCHANGGIFTS_EXCHANGNUM = #{record.exchanggiftsExchangnum,jdbcType=INTEGER},
+      EXCHANGGIFTS_REMARK = #{record.exchanggiftsRemark,jdbcType=VARCHAR},
+      EXCHANGGIFTS_STATE = #{record.exchanggiftsState,jdbcType=INTEGER},
+      EXCHANGGIFTS_ISDEL = #{record.exchanggiftsIsdel,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="customer.chengcong.entity.Exchanggifts">
+    update exchanggifts
+    <set>
+      <if test="shopId != null">
+        SHOP_ID = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsGiftcode != null">
+        EXCHANGGIFTS_GIFTCODE = #{exchanggiftsGiftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsGiftname != null">
+        EXCHANGGIFTS_GIFTNAME = #{exchanggiftsGiftname,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsPhoto != null">
+        EXCHANGGIFTS_PHOTO = #{exchanggiftsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsPoint != null">
+        EXCHANGGIFTS_POINT = #{exchanggiftsPoint,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsInteger != null">
+        EXCHANGGIFTS_INTEGER = #{exchanggiftsInteger,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsExchangnum != null">
+        EXCHANGGIFTS_EXCHANGNUM = #{exchanggiftsExchangnum,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsRemark != null">
+        EXCHANGGIFTS_REMARK = #{exchanggiftsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanggiftsState != null">
+        EXCHANGGIFTS_STATE = #{exchanggiftsState,jdbcType=INTEGER},
+      </if>
+      <if test="exchanggiftsIsdel != null">
+        EXCHANGGIFTS_ISDEL = #{exchanggiftsIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where EXCHANGGIFTS_ID = #{exchanggiftsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="customer.chengcong.entity.Exchanggifts">
+    update exchanggifts
+    set SHOP_ID = #{shopId,jdbcType=INTEGER},
+      EXCHANGGIFTS_GIFTCODE = #{exchanggiftsGiftcode,jdbcType=VARCHAR},
+      EXCHANGGIFTS_GIFTNAME = #{exchanggiftsGiftname,jdbcType=VARCHAR},
+      EXCHANGGIFTS_PHOTO = #{exchanggiftsPhoto,jdbcType=VARCHAR},
+      EXCHANGGIFTS_POINT = #{exchanggiftsPoint,jdbcType=INTEGER},
+      EXCHANGGIFTS_INTEGER = #{exchanggiftsInteger,jdbcType=INTEGER},
+      EXCHANGGIFTS_EXCHANGNUM = #{exchanggiftsExchangnum,jdbcType=INTEGER},
+      EXCHANGGIFTS_REMARK = #{exchanggiftsRemark,jdbcType=VARCHAR},
+      EXCHANGGIFTS_STATE = #{exchanggiftsState,jdbcType=INTEGER},
+      EXCHANGGIFTS_ISDEL = #{exchanggiftsIsdel,jdbcType=INTEGER}
+    where EXCHANGGIFTS_ID = #{exchanggiftsId,jdbcType=INTEGER}
+  </update>
+</mapper>

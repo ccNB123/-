@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer.chengcong.dao.TransferlogsMapper">
+  <resultMap id="BaseResultMap" type="customer.chengcong.entity.Transferlogs">
+    <id column="TRANSFERLOGS_ID" jdbcType="INTEGER" property="transferlogsId" />
+    <result column="SHOP_ID" jdbcType="INTEGER" property="shopId" />
+    <result column="USERS_ID" jdbcType="INTEGER" property="usersId" />
+    <result column="TRANSFERLOGS_FROMMC_ID" jdbcType="INTEGER" property="transferlogsFrommcId" />
+    <result column="TRANSFERLOGS_FROMMC_CARDID" jdbcType="VARCHAR" property="transferlogsFrommcCardid" />
+    <result column="TRANSFERLOGS_TOMC_ID" jdbcType="INTEGER" property="transferlogsTomcId" />
+    <result column="TRANSFERLOGS_TOMC_CARDID" jdbcType="VARCHAR" property="transferlogsTomcCardid" />
+    <result column="TRANSFERLOGS_TRANSFERMONEY" jdbcType="REAL" property="transferlogsTransfermoney" />
+    <result column="TRANSFERLOGS_REMARK" jdbcType="VARCHAR" property="transferlogsRemark" />
+    <result column="TRANSFERLOGS_CREATETIME" jdbcType="DATE" property="transferlogsCreatetime" />
+    <result column="TRANSFERLOGS_ISDEL" jdbcType="INTEGER" property="transferlogsIsdel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    TRANSFERLOGS_ID, SHOP_ID, USERS_ID, TRANSFERLOGS_FROMMC_ID, TRANSFERLOGS_FROMMC_CARDID, 
+    TRANSFERLOGS_TOMC_ID, TRANSFERLOGS_TOMC_CARDID, TRANSFERLOGS_TRANSFERMONEY, TRANSFERLOGS_REMARK, 
+    TRANSFERLOGS_CREATETIME, TRANSFERLOGS_ISDEL
+  </sql>
+  <select id="selectByExample" parameterType="customer.chengcong.entity.TransferlogsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transferlogs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transferlogs
+    where TRANSFERLOGS_ID = #{transferlogsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transferlogs
+    where TRANSFERLOGS_ID = #{transferlogsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="customer.chengcong.entity.TransferlogsExample">
+    delete from transferlogs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="customer.chengcong.entity.Transferlogs">
+    insert into transferlogs (TRANSFERLOGS_ID, SHOP_ID, USERS_ID, 
+      TRANSFERLOGS_FROMMC_ID, TRANSFERLOGS_FROMMC_CARDID, 
+      TRANSFERLOGS_TOMC_ID, TRANSFERLOGS_TOMC_CARDID, 
+      TRANSFERLOGS_TRANSFERMONEY, TRANSFERLOGS_REMARK, 
+      TRANSFERLOGS_CREATETIME, TRANSFERLOGS_ISDEL)
+    values (#{transferlogsId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{usersId,jdbcType=INTEGER}, 
+      #{transferlogsFrommcId,jdbcType=INTEGER}, #{transferlogsFrommcCardid,jdbcType=VARCHAR}, 
+      #{transferlogsTomcId,jdbcType=INTEGER}, #{transferlogsTomcCardid,jdbcType=VARCHAR}, 
+      #{transferlogsTransfermoney,jdbcType=REAL}, #{transferlogsRemark,jdbcType=VARCHAR}, 
+      #{transferlogsCreatetime,jdbcType=DATE}, #{transferlogsIsdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="customer.chengcong.entity.Transferlogs">
+    insert into transferlogs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transferlogsId != null">
+        TRANSFERLOGS_ID,
+      </if>
+      <if test="shopId != null">
+        SHOP_ID,
+      </if>
+      <if test="usersId != null">
+        USERS_ID,
+      </if>
+      <if test="transferlogsFrommcId != null">
+        TRANSFERLOGS_FROMMC_ID,
+      </if>
+      <if test="transferlogsFrommcCardid != null">
+        TRANSFERLOGS_FROMMC_CARDID,
+      </if>
+      <if test="transferlogsTomcId != null">
+        TRANSFERLOGS_TOMC_ID,
+      </if>
+      <if test="transferlogsTomcCardid != null">
+        TRANSFERLOGS_TOMC_CARDID,
+      </if>
+      <if test="transferlogsTransfermoney != null">
+        TRANSFERLOGS_TRANSFERMONEY,
+      </if>
+      <if test="transferlogsRemark != null">
+        TRANSFERLOGS_REMARK,
+      </if>
+      <if test="transferlogsCreatetime != null">
+        TRANSFERLOGS_CREATETIME,
+      </if>
+      <if test="transferlogsIsdel != null">
+        TRANSFERLOGS_ISDEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transferlogsId != null">
+        #{transferlogsId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null">
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="transferlogsFrommcId != null">
+        #{transferlogsFrommcId,jdbcType=INTEGER},
+      </if>
+      <if test="transferlogsFrommcCardid != null">
+        #{transferlogsFrommcCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="transferlogsTomcId != null">
+        #{transferlogsTomcId,jdbcType=INTEGER},
+      </if>
+      <if test="transferlogsTomcCardid != null">
+        #{transferlogsTomcCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="transferlogsTransfermoney != null">
+        #{transferlogsTransfermoney,jdbcType=REAL},
+      </if>
+      <if test="transferlogsRemark != null">
+        #{transferlogsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="transferlogsCreatetime != null">
+        #{transferlogsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="transferlogsIsdel != null">
+        #{transferlogsIsdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="customer.chengcong.entity.TransferlogsExample" resultType="java.lang.Integer">
+    select count(*) from transferlogs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transferlogs
+    <set>
+      <if test="record.transferlogsId != null">
+        TRANSFERLOGS_ID = #{record.transferlogsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersId != null">
+        USERS_ID = #{record.usersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferlogsFrommcId != null">
+        TRANSFERLOGS_FROMMC_ID = #{record.transferlogsFrommcId,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferlogsFrommcCardid != null">
+        TRANSFERLOGS_FROMMC_CARDID = #{record.transferlogsFrommcCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferlogsTomcId != null">
+        TRANSFERLOGS_TOMC_ID = #{record.transferlogsTomcId,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferlogsTomcCardid != null">
+        TRANSFERLOGS_TOMC_CARDID = #{record.transferlogsTomcCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferlogsTransfermoney != null">
+        TRANSFERLOGS_TRANSFERMONEY = #{record.transferlogsTransfermoney,jdbcType=REAL},
+      </if>
+      <if test="record.transferlogsRemark != null">
+        TRANSFERLOGS_REMARK = #{record.transferlogsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferlogsCreatetime != null">
+        TRANSFERLOGS_CREATETIME = #{record.transferlogsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="record.transferlogsIsdel != null">
+        TRANSFERLOGS_ISDEL = #{record.transferlogsIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transferlogs
+    set TRANSFERLOGS_ID = #{record.transferlogsId,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      USERS_ID = #{record.usersId,jdbcType=INTEGER},
+      TRANSFERLOGS_FROMMC_ID = #{record.transferlogsFrommcId,jdbcType=INTEGER},
+      TRANSFERLOGS_FROMMC_CARDID = #{record.transferlogsFrommcCardid,jdbcType=VARCHAR},
+      TRANSFERLOGS_TOMC_ID = #{record.transferlogsTomcId,jdbcType=INTEGER},
+      TRANSFERLOGS_TOMC_CARDID = #{record.transferlogsTomcCardid,jdbcType=VARCHAR},
+      TRANSFERLOGS_TRANSFERMONEY = #{record.transferlogsTransfermoney,jdbcType=REAL},
+      TRANSFERLOGS_REMARK = #{record.transferlogsRemark,jdbcType=VARCHAR},
+      TRANSFERLOGS_CREATETIME = #{record.transferlogsCreatetime,jdbcType=DATE},
+      TRANSFERLOGS_ISDEL = #{record.transferlogsIsdel,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="customer.chengcong.entity.Transferlogs">
+    update transferlogs
+    <set>
+      <if test="shopId != null">
+        SHOP_ID = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null">
+        USERS_ID = #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="transferlogsFrommcId != null">
+        TRANSFERLOGS_FROMMC_ID = #{transferlogsFrommcId,jdbcType=INTEGER},
+      </if>
+      <if test="transferlogsFrommcCardid != null">
+        TRANSFERLOGS_FROMMC_CARDID = #{transferlogsFrommcCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="transferlogsTomcId != null">
+        TRANSFERLOGS_TOMC_ID = #{transferlogsTomcId,jdbcType=INTEGER},
+      </if>
+      <if test="transferlogsTomcCardid != null">
+        TRANSFERLOGS_TOMC_CARDID = #{transferlogsTomcCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="transferlogsTransfermoney != null">
+        TRANSFERLOGS_TRANSFERMONEY = #{transferlogsTransfermoney,jdbcType=REAL},
+      </if>
+      <if test="transferlogsRemark != null">
+        TRANSFERLOGS_REMARK = #{transferlogsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="transferlogsCreatetime != null">
+        TRANSFERLOGS_CREATETIME = #{transferlogsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="transferlogsIsdel != null">
+        TRANSFERLOGS_ISDEL = #{transferlogsIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where TRANSFERLOGS_ID = #{transferlogsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="customer.chengcong.entity.Transferlogs">
+    update transferlogs
+    set SHOP_ID = #{shopId,jdbcType=INTEGER},
+      USERS_ID = #{usersId,jdbcType=INTEGER},
+      TRANSFERLOGS_FROMMC_ID = #{transferlogsFrommcId,jdbcType=INTEGER},
+      TRANSFERLOGS_FROMMC_CARDID = #{transferlogsFrommcCardid,jdbcType=VARCHAR},
+      TRANSFERLOGS_TOMC_ID = #{transferlogsTomcId,jdbcType=INTEGER},
+      TRANSFERLOGS_TOMC_CARDID = #{transferlogsTomcCardid,jdbcType=VARCHAR},
+      TRANSFERLOGS_TRANSFERMONEY = #{transferlogsTransfermoney,jdbcType=REAL},
+      TRANSFERLOGS_REMARK = #{transferlogsRemark,jdbcType=VARCHAR},
+      TRANSFERLOGS_CREATETIME = #{transferlogsCreatetime,jdbcType=DATE},
+      TRANSFERLOGS_ISDEL = #{transferlogsIsdel,jdbcType=INTEGER}
+    where TRANSFERLOGS_ID = #{transferlogsId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer.chengcong.dao.UsersMapper">
+  <resultMap id="BaseResultMap" type="customer.chengcong.entity.Users">
+    <id column="USERS_ID" jdbcType="INTEGER" property="usersId" />
+    <result column="SHOP_ID" jdbcType="INTEGER" property="shopId" />
+    <result column="USERS_LOGINNAME" jdbcType="VARCHAR" property="usersLoginname" />
+    <result column="USERS_PASSWORD" jdbcType="VARCHAR" property="usersPassword" />
+    <result column="USERS_REALNAME" jdbcType="VARCHAR" property="usersRealname" />
+    <result column="USERS_SEX" jdbcType="VARCHAR" property="usersSex" />
+    <result column="USERS_TELEPHONE" jdbcType="VARCHAR" property="usersTelephone" />
+    <result column="USERS_ROLE" jdbcType="INTEGER" property="usersRole" />
+    <result column="USERS_CANDELETE" jdbcType="INTEGER" property="usersCandelete" />
+    <result column="USERS_ISDEL" jdbcType="INTEGER" property="usersIsdel" />
+    <association property="categories" column="USERS_ROLE" select="customer.chengcong.dao.CategoriesMapper.selectByPrimaryKey"></association>
+    <association property="shop" column="SHOP_ID" select="customer.chengcong.dao.ShopsMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USERS_ID, SHOP_ID, USERS_LOGINNAME, USERS_PASSWORD, USERS_REALNAME, USERS_SEX, USERS_TELEPHONE, 
+    USERS_ROLE, USERS_CANDELETE, USERS_ISDEL
+  </sql>
+  <select id="selectByExample" parameterType="customer.chengcong.entity.UsersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where USERS_ID = #{usersId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users
+    where USERS_ID = #{usersId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="customer.chengcong.entity.UsersExample">
+    delete from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="customer.chengcong.entity.Users">
+    insert into users (USERS_ID, SHOP_ID, USERS_LOGINNAME, 
+      USERS_PASSWORD, USERS_REALNAME, USERS_SEX, 
+      USERS_TELEPHONE, USERS_ROLE, USERS_CANDELETE, 
+      USERS_ISDEL)
+    values (#{usersId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{usersLoginname,jdbcType=VARCHAR}, 
+      #{usersPassword,jdbcType=VARCHAR}, #{usersRealname,jdbcType=VARCHAR}, #{usersSex,jdbcType=VARCHAR}, 
+      #{usersTelephone,jdbcType=VARCHAR}, #{usersRole,jdbcType=INTEGER}, #{usersCandelete,jdbcType=INTEGER}, 
+      #{usersIsdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="customer.chengcong.entity.Users">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usersId != null">
+        USERS_ID,
+      </if>
+      <if test="shopId != null">
+        SHOP_ID,
+      </if>
+      <if test="usersLoginname != null">
+        USERS_LOGINNAME,
+      </if>
+      <if test="usersPassword != null">
+        USERS_PASSWORD,
+      </if>
+      <if test="usersRealname != null">
+        USERS_REALNAME,
+      </if>
+      <if test="usersSex != null">
+        USERS_SEX,
+      </if>
+      <if test="usersTelephone != null">
+        USERS_TELEPHONE,
+      </if>
+      <if test="usersRole != null">
+        USERS_ROLE,
+      </if>
+      <if test="usersCandelete != null">
+        USERS_CANDELETE,
+      </if>
+      <if test="usersIsdel != null">
+        USERS_ISDEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usersId != null">
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="usersLoginname != null">
+        #{usersLoginname,jdbcType=VARCHAR},
+      </if>
+      <if test="usersPassword != null">
+        #{usersPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersRealname != null">
+        #{usersRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="usersSex != null">
+        #{usersSex,jdbcType=VARCHAR},
+      </if>
+      <if test="usersTelephone != null">
+        #{usersTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="usersRole != null">
+        #{usersRole,jdbcType=INTEGER},
+      </if>
+      <if test="usersCandelete != null">
+        #{usersCandelete,jdbcType=INTEGER},
+      </if>
+      <if test="usersIsdel != null">
+        #{usersIsdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="customer.chengcong.entity.UsersExample" resultType="java.lang.Integer">
+    select count(*) from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update users
+    <set>
+      <if test="record.usersId != null">
+        USERS_ID = #{record.usersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersLoginname != null">
+        USERS_LOGINNAME = #{record.usersLoginname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersPassword != null">
+        USERS_PASSWORD = #{record.usersPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersRealname != null">
+        USERS_REALNAME = #{record.usersRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersSex != null">
+        USERS_SEX = #{record.usersSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersTelephone != null">
+        USERS_TELEPHONE = #{record.usersTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersRole != null">
+        USERS_ROLE = #{record.usersRole,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersCandelete != null">
+        USERS_CANDELETE = #{record.usersCandelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersIsdel != null">
+        USERS_ISDEL = #{record.usersIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update users
+    set USERS_ID = #{record.usersId,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      USERS_LOGINNAME = #{record.usersLoginname,jdbcType=VARCHAR},
+      USERS_PASSWORD = #{record.usersPassword,jdbcType=VARCHAR},
+      USERS_REALNAME = #{record.usersRealname,jdbcType=VARCHAR},
+      USERS_SEX = #{record.usersSex,jdbcType=VARCHAR},
+      USERS_TELEPHONE = #{record.usersTelephone,jdbcType=VARCHAR},
+      USERS_ROLE = #{record.usersRole,jdbcType=INTEGER},
+      USERS_CANDELETE = #{record.usersCandelete,jdbcType=INTEGER},
+      USERS_ISDEL = #{record.usersIsdel,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="customer.chengcong.entity.Users">
+    update users
+    <set>
+      <if test="shopId != null">
+        SHOP_ID = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="usersLoginname != null">
+        USERS_LOGINNAME = #{usersLoginname,jdbcType=VARCHAR},
+      </if>
+      <if test="usersPassword != null">
+        USERS_PASSWORD = #{usersPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersRealname != null">
+        USERS_REALNAME = #{usersRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="usersSex != null">
+        USERS_SEX = #{usersSex,jdbcType=VARCHAR},
+      </if>
+      <if test="usersTelephone != null">
+        USERS_TELEPHONE = #{usersTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="usersRole != null">
+        USERS_ROLE = #{usersRole,jdbcType=INTEGER},
+      </if>
+      <if test="usersCandelete != null">
+        USERS_CANDELETE = #{usersCandelete,jdbcType=INTEGER},
+      </if>
+      <if test="usersIsdel != null">
+        USERS_ISDEL = #{usersIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where USERS_ID = #{usersId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="customer.chengcong.entity.Users">
+    update users
+    set SHOP_ID = #{shopId,jdbcType=INTEGER},
+      USERS_LOGINNAME = #{usersLoginname,jdbcType=VARCHAR},
+      USERS_PASSWORD = #{usersPassword,jdbcType=VARCHAR},
+      USERS_REALNAME = #{usersRealname,jdbcType=VARCHAR},
+      USERS_SEX = #{usersSex,jdbcType=VARCHAR},
+      USERS_TELEPHONE = #{usersTelephone,jdbcType=VARCHAR},
+      USERS_ROLE = #{usersRole,jdbcType=INTEGER},
+      USERS_CANDELETE = #{usersCandelete,jdbcType=INTEGER},
+      USERS_ISDEL = #{usersIsdel,jdbcType=INTEGER}
+    where USERS_ID = #{usersId,jdbcType=INTEGER}
+  </update>
+</mapper>

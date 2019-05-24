@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer.chengcong.dao.MemcardsMapper">
+  <resultMap id="BaseResultMap" type="customer.chengcong.entity.Memcards">
+    <id column="MEMCARDS_ID" jdbcType="INTEGER" property="memcardsId" />
+    <result column="CARDLEVELS_ID" jdbcType="INTEGER" property="cardlevelsId" />
+    <result column="SHOP_ID" jdbcType="INTEGER" property="shopId" />
+    <result column="MEMCARDS_CARDID" jdbcType="VARCHAR" property="memcardsCardid" />
+    <result column="MEMCARDS_PASSWORD" jdbcType="VARCHAR" property="memcardsPassword" />
+    <result column="MEMCARDS_NAME" jdbcType="VARCHAR" property="memcardsName" />
+    <result column="MEMCARDS_SEX" jdbcType="VARCHAR" property="memcardsSex" />
+    <result column="MEMCARDS_MOBILE" jdbcType="VARCHAR" property="memcardsMobile" />
+    <result column="MEMCARDS_PHOTO" jdbcType="VARCHAR" property="memcardsPhoto" />
+    <result column="MEMCARDS_BIRTHDAY_MONTH" jdbcType="INTEGER" property="memcardsBirthdayMonth" />
+    <result column="MEMCARDS_BIRTHDAY_DAY" jdbcType="INTEGER" property="memcardsBirthdayDay" />
+    <result column="MEMCARDS_BIRTHDAYTYPE" jdbcType="INTEGER" property="memcardsBirthdaytype" />
+    <result column="MEMCARDS_ISPAST" jdbcType="INTEGER" property="memcardsIspast" />
+    <result column="MEMCARDS_PASTTIME" jdbcType="DATE" property="memcardsPasttime" />
+    <result column="MEMCARDS_POINT" jdbcType="INTEGER" property="memcardsPoint" />
+    <result column="MEMCARDS_MONEY" jdbcType="REAL" property="memcardsMoney" />
+    <result column="MEMCARDS_TOTALMONEY" jdbcType="REAL" property="memcardsTotalmoney" />
+    <result column="MEMCARDS_TOTALCOUNT" jdbcType="INTEGER" property="memcardsTotalcount" />
+    <result column="MEMCARDS_STATE" jdbcType="INTEGER" property="memcardsState" />
+    <result column="MEMCARDS_ISPOINTAUTO" jdbcType="INTEGER" property="memcardsIspointauto" />
+    <result column="MEMCARDS_REFERERID" jdbcType="INTEGER" property="memcardsRefererid" />
+    <result column="MEMCARDS_REFERERCARD" jdbcType="VARCHAR" property="memcardsReferercard" />
+    <result column="MEMCARDS_REFERERNAME" jdbcType="VARCHAR" property="memcardsReferername" />
+    <result column="MEMCARDS_CREATETIME" jdbcType="TIMESTAMP" property="memcardsCreatetime" />
+    <result column="MEMCARDS_ISDEL" jdbcType="INTEGER" property="memcardsIsdel" />
+    <association property="categories" column="MEMCARDS_STATE" select="customer.chengcong.dao.CategoriesMapper.selectByPrimaryKey"></association>
+    <association property="cardlevels" column="CARDLEVELS_ID" select="customer.chengcong.dao.CardlevelsMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MEMCARDS_ID, CARDLEVELS_ID, SHOP_ID, MEMCARDS_CARDID, MEMCARDS_PASSWORD, MEMCARDS_NAME, 
+    MEMCARDS_SEX, MEMCARDS_MOBILE, MEMCARDS_PHOTO, MEMCARDS_BIRTHDAY_MONTH, MEMCARDS_BIRTHDAY_DAY, 
+    MEMCARDS_BIRTHDAYTYPE, MEMCARDS_ISPAST, MEMCARDS_PASTTIME, MEMCARDS_POINT, MEMCARDS_MONEY, 
+    MEMCARDS_TOTALMONEY, MEMCARDS_TOTALCOUNT, MEMCARDS_STATE, MEMCARDS_ISPOINTAUTO, MEMCARDS_REFERERID, 
+    MEMCARDS_REFERERCARD, MEMCARDS_REFERERNAME, MEMCARDS_CREATETIME, MEMCARDS_ISDEL
+  </sql>
+  <select id="selectByExample" parameterType="customer.chengcong.entity.MemcardsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from memcards
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from memcards
+    where MEMCARDS_ID = #{memcardsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from memcards
+    where MEMCARDS_ID = #{memcardsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="customer.chengcong.entity.MemcardsExample">
+    delete from memcards
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="customer.chengcong.entity.Memcards">
+    insert into memcards (MEMCARDS_ID, CARDLEVELS_ID, SHOP_ID, 
+      MEMCARDS_CARDID, MEMCARDS_PASSWORD, MEMCARDS_NAME, 
+      MEMCARDS_SEX, MEMCARDS_MOBILE, MEMCARDS_PHOTO, 
+      MEMCARDS_BIRTHDAY_MONTH, MEMCARDS_BIRTHDAY_DAY, 
+      MEMCARDS_BIRTHDAYTYPE, MEMCARDS_ISPAST, MEMCARDS_PASTTIME, 
+      MEMCARDS_POINT, MEMCARDS_MONEY, MEMCARDS_TOTALMONEY, 
+      MEMCARDS_TOTALCOUNT, MEMCARDS_STATE, MEMCARDS_ISPOINTAUTO, 
+      MEMCARDS_REFERERID, MEMCARDS_REFERERCARD, 
+      MEMCARDS_REFERERNAME, MEMCARDS_CREATETIME, 
+      MEMCARDS_ISDEL)
+    values (#{memcardsId,jdbcType=INTEGER}, #{cardlevelsId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, 
+      #{memcardsCardid,jdbcType=VARCHAR}, #{memcardsPassword,jdbcType=VARCHAR}, #{memcardsName,jdbcType=VARCHAR}, 
+      #{memcardsSex,jdbcType=VARCHAR}, #{memcardsMobile,jdbcType=VARCHAR}, #{memcardsPhoto,jdbcType=VARCHAR}, 
+      #{memcardsBirthdayMonth,jdbcType=INTEGER}, #{memcardsBirthdayDay,jdbcType=INTEGER}, 
+      #{memcardsBirthdaytype,jdbcType=INTEGER}, #{memcardsIspast,jdbcType=INTEGER}, #{memcardsPasttime,jdbcType=DATE}, 
+      #{memcardsPoint,jdbcType=INTEGER}, #{memcardsMoney,jdbcType=REAL}, #{memcardsTotalmoney,jdbcType=REAL}, 
+      #{memcardsTotalcount,jdbcType=INTEGER}, #{memcardsState,jdbcType=INTEGER}, #{memcardsIspointauto,jdbcType=INTEGER}, 
+      #{memcardsRefererid,jdbcType=INTEGER}, #{memcardsReferercard,jdbcType=VARCHAR}, 
+      #{memcardsReferername,jdbcType=VARCHAR}, #{memcardsCreatetime,jdbcType=TIMESTAMP}, 
+      #{memcardsIsdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="customer.chengcong.entity.Memcards">
+    insert into memcards
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memcardsId != null">
+        MEMCARDS_ID,
+      </if>
+      <if test="cardlevelsId != null">
+        CARDLEVELS_ID,
+      </if>
+      <if test="shopId != null">
+        SHOP_ID,
+      </if>
+      <if test="memcardsCardid != null">
+        MEMCARDS_CARDID,
+      </if>
+      <if test="memcardsPassword != null">
+        MEMCARDS_PASSWORD,
+      </if>
+      <if test="memcardsName != null">
+        MEMCARDS_NAME,
+      </if>
+      <if test="memcardsSex != null">
+        MEMCARDS_SEX,
+      </if>
+      <if test="memcardsMobile != null">
+        MEMCARDS_MOBILE,
+      </if>
+      <if test="memcardsPhoto != null">
+        MEMCARDS_PHOTO,
+      </if>
+      <if test="memcardsBirthdayMonth != null">
+        MEMCARDS_BIRTHDAY_MONTH,
+      </if>
+      <if test="memcardsBirthdayDay != null">
+        MEMCARDS_BIRTHDAY_DAY,
+      </if>
+      <if test="memcardsBirthdaytype != null">
+        MEMCARDS_BIRTHDAYTYPE,
+      </if>
+      <if test="memcardsIspast != null">
+        MEMCARDS_ISPAST,
+      </if>
+      <if test="memcardsPasttime != null">
+        MEMCARDS_PASTTIME,
+      </if>
+      <if test="memcardsPoint != null">
+        MEMCARDS_POINT,
+      </if>
+      <if test="memcardsMoney != null">
+        MEMCARDS_MONEY,
+      </if>
+      <if test="memcardsTotalmoney != null">
+        MEMCARDS_TOTALMONEY,
+      </if>
+      <if test="memcardsTotalcount != null">
+        MEMCARDS_TOTALCOUNT,
+      </if>
+      <if test="memcardsState != null">
+        MEMCARDS_STATE,
+      </if>
+      <if test="memcardsIspointauto != null">
+        MEMCARDS_ISPOINTAUTO,
+      </if>
+      <if test="memcardsRefererid != null">
+        MEMCARDS_REFERERID,
+      </if>
+      <if test="memcardsReferercard != null">
+        MEMCARDS_REFERERCARD,
+      </if>
+      <if test="memcardsReferername != null">
+        MEMCARDS_REFERERNAME,
+      </if>
+      <if test="memcardsCreatetime != null">
+        MEMCARDS_CREATETIME,
+      </if>
+      <if test="memcardsIsdel != null">
+        MEMCARDS_ISDEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memcardsId != null">
+        #{memcardsId,jdbcType=INTEGER},
+      </if>
+      <if test="cardlevelsId != null">
+        #{cardlevelsId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsCardid != null">
+        #{memcardsCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsPassword != null">
+        #{memcardsPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsName != null">
+        #{memcardsName,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsSex != null">
+        #{memcardsSex,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsMobile != null">
+        #{memcardsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsPhoto != null">
+        #{memcardsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsBirthdayMonth != null">
+        #{memcardsBirthdayMonth,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsBirthdayDay != null">
+        #{memcardsBirthdayDay,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsBirthdaytype != null">
+        #{memcardsBirthdaytype,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsIspast != null">
+        #{memcardsIspast,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsPasttime != null">
+        #{memcardsPasttime,jdbcType=DATE},
+      </if>
+      <if test="memcardsPoint != null">
+        #{memcardsPoint,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsMoney != null">
+        #{memcardsMoney,jdbcType=REAL},
+      </if>
+      <if test="memcardsTotalmoney != null">
+        #{memcardsTotalmoney,jdbcType=REAL},
+      </if>
+      <if test="memcardsTotalcount != null">
+        #{memcardsTotalcount,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsState != null">
+        #{memcardsState,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsIspointauto != null">
+        #{memcardsIspointauto,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsRefererid != null">
+        #{memcardsRefererid,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsReferercard != null">
+        #{memcardsReferercard,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsReferername != null">
+        #{memcardsReferername,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsCreatetime != null">
+        #{memcardsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memcardsIsdel != null">
+        #{memcardsIsdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="customer.chengcong.entity.MemcardsExample" resultType="java.lang.Integer">
+    select count(*) from memcards
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update memcards
+    <set>
+      <if test="record.memcardsId != null">
+        MEMCARDS_ID = #{record.memcardsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardlevelsId != null">
+        CARDLEVELS_ID = #{record.cardlevelsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsCardid != null">
+        MEMCARDS_CARDID = #{record.memcardsCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsPassword != null">
+        MEMCARDS_PASSWORD = #{record.memcardsPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsName != null">
+        MEMCARDS_NAME = #{record.memcardsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsSex != null">
+        MEMCARDS_SEX = #{record.memcardsSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsMobile != null">
+        MEMCARDS_MOBILE = #{record.memcardsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsPhoto != null">
+        MEMCARDS_PHOTO = #{record.memcardsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsBirthdayMonth != null">
+        MEMCARDS_BIRTHDAY_MONTH = #{record.memcardsBirthdayMonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsBirthdayDay != null">
+        MEMCARDS_BIRTHDAY_DAY = #{record.memcardsBirthdayDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsBirthdaytype != null">
+        MEMCARDS_BIRTHDAYTYPE = #{record.memcardsBirthdaytype,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsIspast != null">
+        MEMCARDS_ISPAST = #{record.memcardsIspast,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsPasttime != null">
+        MEMCARDS_PASTTIME = #{record.memcardsPasttime,jdbcType=DATE},
+      </if>
+      <if test="record.memcardsPoint != null">
+        MEMCARDS_POINT = #{record.memcardsPoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsMoney != null">
+        MEMCARDS_MONEY = #{record.memcardsMoney,jdbcType=REAL},
+      </if>
+      <if test="record.memcardsTotalmoney != null">
+        MEMCARDS_TOTALMONEY = #{record.memcardsTotalmoney,jdbcType=REAL},
+      </if>
+      <if test="record.memcardsTotalcount != null">
+        MEMCARDS_TOTALCOUNT = #{record.memcardsTotalcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsState != null">
+        MEMCARDS_STATE = #{record.memcardsState,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsIspointauto != null">
+        MEMCARDS_ISPOINTAUTO = #{record.memcardsIspointauto,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsRefererid != null">
+        MEMCARDS_REFERERID = #{record.memcardsRefererid,jdbcType=INTEGER},
+      </if>
+      <if test="record.memcardsReferercard != null">
+        MEMCARDS_REFERERCARD = #{record.memcardsReferercard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsReferername != null">
+        MEMCARDS_REFERERNAME = #{record.memcardsReferername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memcardsCreatetime != null">
+        MEMCARDS_CREATETIME = #{record.memcardsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.memcardsIsdel != null">
+        MEMCARDS_ISDEL = #{record.memcardsIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update memcards
+    set MEMCARDS_ID = #{record.memcardsId,jdbcType=INTEGER},
+      CARDLEVELS_ID = #{record.cardlevelsId,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      MEMCARDS_CARDID = #{record.memcardsCardid,jdbcType=VARCHAR},
+      MEMCARDS_PASSWORD = #{record.memcardsPassword,jdbcType=VARCHAR},
+      MEMCARDS_NAME = #{record.memcardsName,jdbcType=VARCHAR},
+      MEMCARDS_SEX = #{record.memcardsSex,jdbcType=VARCHAR},
+      MEMCARDS_MOBILE = #{record.memcardsMobile,jdbcType=VARCHAR},
+      MEMCARDS_PHOTO = #{record.memcardsPhoto,jdbcType=VARCHAR},
+      MEMCARDS_BIRTHDAY_MONTH = #{record.memcardsBirthdayMonth,jdbcType=INTEGER},
+      MEMCARDS_BIRTHDAY_DAY = #{record.memcardsBirthdayDay,jdbcType=INTEGER},
+      MEMCARDS_BIRTHDAYTYPE = #{record.memcardsBirthdaytype,jdbcType=INTEGER},
+      MEMCARDS_ISPAST = #{record.memcardsIspast,jdbcType=INTEGER},
+      MEMCARDS_PASTTIME = #{record.memcardsPasttime,jdbcType=DATE},
+      MEMCARDS_POINT = #{record.memcardsPoint,jdbcType=INTEGER},
+      MEMCARDS_MONEY = #{record.memcardsMoney,jdbcType=REAL},
+      MEMCARDS_TOTALMONEY = #{record.memcardsTotalmoney,jdbcType=REAL},
+      MEMCARDS_TOTALCOUNT = #{record.memcardsTotalcount,jdbcType=INTEGER},
+      MEMCARDS_STATE = #{record.memcardsState,jdbcType=INTEGER},
+      MEMCARDS_ISPOINTAUTO = #{record.memcardsIspointauto,jdbcType=INTEGER},
+      MEMCARDS_REFERERID = #{record.memcardsRefererid,jdbcType=INTEGER},
+      MEMCARDS_REFERERCARD = #{record.memcardsReferercard,jdbcType=VARCHAR},
+      MEMCARDS_REFERERNAME = #{record.memcardsReferername,jdbcType=VARCHAR},
+      MEMCARDS_CREATETIME = #{record.memcardsCreatetime,jdbcType=TIMESTAMP},
+      MEMCARDS_ISDEL = #{record.memcardsIsdel,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="customer.chengcong.entity.Memcards">
+    update memcards
+    <set>
+      <if test="cardlevelsId != null">
+        CARDLEVELS_ID = #{cardlevelsId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        SHOP_ID = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsCardid != null">
+        MEMCARDS_CARDID = #{memcardsCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsPassword != null">
+        MEMCARDS_PASSWORD = #{memcardsPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsName != null">
+        MEMCARDS_NAME = #{memcardsName,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsSex != null">
+        MEMCARDS_SEX = #{memcardsSex,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsMobile != null">
+        MEMCARDS_MOBILE = #{memcardsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsPhoto != null">
+        MEMCARDS_PHOTO = #{memcardsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsBirthdayMonth != null">
+        MEMCARDS_BIRTHDAY_MONTH = #{memcardsBirthdayMonth,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsBirthdayDay != null">
+        MEMCARDS_BIRTHDAY_DAY = #{memcardsBirthdayDay,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsBirthdaytype != null">
+        MEMCARDS_BIRTHDAYTYPE = #{memcardsBirthdaytype,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsIspast != null">
+        MEMCARDS_ISPAST = #{memcardsIspast,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsPasttime != null">
+        MEMCARDS_PASTTIME = #{memcardsPasttime,jdbcType=DATE},
+      </if>
+      <if test="memcardsPoint != null">
+        MEMCARDS_POINT = #{memcardsPoint,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsMoney != null">
+        MEMCARDS_MONEY = #{memcardsMoney,jdbcType=REAL},
+      </if>
+      <if test="memcardsTotalmoney != null">
+        MEMCARDS_TOTALMONEY = #{memcardsTotalmoney,jdbcType=REAL},
+      </if>
+      <if test="memcardsTotalcount != null">
+        MEMCARDS_TOTALCOUNT = #{memcardsTotalcount,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsState != null">
+        MEMCARDS_STATE = #{memcardsState,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsIspointauto != null">
+        MEMCARDS_ISPOINTAUTO = #{memcardsIspointauto,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsRefererid != null">
+        MEMCARDS_REFERERID = #{memcardsRefererid,jdbcType=INTEGER},
+      </if>
+      <if test="memcardsReferercard != null">
+        MEMCARDS_REFERERCARD = #{memcardsReferercard,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsReferername != null">
+        MEMCARDS_REFERERNAME = #{memcardsReferername,jdbcType=VARCHAR},
+      </if>
+      <if test="memcardsCreatetime != null">
+        MEMCARDS_CREATETIME = #{memcardsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memcardsIsdel != null">
+        MEMCARDS_ISDEL = #{memcardsIsdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where MEMCARDS_ID = #{memcardsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="customer.chengcong.entity.Memcards">
+    update memcards
+    set CARDLEVELS_ID = #{cardlevelsId,jdbcType=INTEGER},
+      SHOP_ID = #{shopId,jdbcType=INTEGER},
+      MEMCARDS_CARDID = #{memcardsCardid,jdbcType=VARCHAR},
+      MEMCARDS_PASSWORD = #{memcardsPassword,jdbcType=VARCHAR},
+      MEMCARDS_NAME = #{memcardsName,jdbcType=VARCHAR},
+      MEMCARDS_SEX = #{memcardsSex,jdbcType=VARCHAR},
+      MEMCARDS_MOBILE = #{memcardsMobile,jdbcType=VARCHAR},
+      MEMCARDS_PHOTO = #{memcardsPhoto,jdbcType=VARCHAR},
+      MEMCARDS_BIRTHDAY_MONTH = #{memcardsBirthdayMonth,jdbcType=INTEGER},
+      MEMCARDS_BIRTHDAY_DAY = #{memcardsBirthdayDay,jdbcType=INTEGER},
+      MEMCARDS_BIRTHDAYTYPE = #{memcardsBirthdaytype,jdbcType=INTEGER},
+      MEMCARDS_ISPAST = #{memcardsIspast,jdbcType=INTEGER},
+      MEMCARDS_PASTTIME = #{memcardsPasttime,jdbcType=DATE},
+      MEMCARDS_POINT = #{memcardsPoint,jdbcType=INTEGER},
+      MEMCARDS_MONEY = #{memcardsMoney,jdbcType=REAL},
+      MEMCARDS_TOTALMONEY = #{memcardsTotalmoney,jdbcType=REAL},
+      MEMCARDS_TOTALCOUNT = #{memcardsTotalcount,jdbcType=INTEGER},
+      MEMCARDS_STATE = #{memcardsState,jdbcType=INTEGER},
+      MEMCARDS_ISPOINTAUTO = #{memcardsIspointauto,jdbcType=INTEGER},
+      MEMCARDS_REFERERID = #{memcardsRefererid,jdbcType=INTEGER},
+      MEMCARDS_REFERERCARD = #{memcardsReferercard,jdbcType=VARCHAR},
+      MEMCARDS_REFERERNAME = #{memcardsReferername,jdbcType=VARCHAR},
+      MEMCARDS_CREATETIME = #{memcardsCreatetime,jdbcType=TIMESTAMP},
+      MEMCARDS_ISDEL = #{memcardsIsdel,jdbcType=INTEGER}
+    where MEMCARDS_ID = #{memcardsId,jdbcType=INTEGER}
+  </update>
+</mapper>
